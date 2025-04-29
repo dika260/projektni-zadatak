@@ -1,0 +1,45 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+struct predmet {
+    int tezina, vrednost;
+};
+
+int main() {
+    int p, v;
+    cin >> p;
+    vector<predmet> a(p);
+    for(int i = 0; i < p; i++) {
+        cin >> a[i].tezina >> a[i].vrednost;
+    }
+
+    cin >> v;
+    vector<int> d(v);
+    for(int i = 0; i < v; i++) {
+        cin >> d[i];
+    }
+
+    sort(a.begin(), a.end(), [](const predmet &a, const predmet &b) {
+        return a.vrednost > b.vrednost;
+    });
+
+    sort(d.begin(), d.end());
+
+    int zbir = 0;
+    int vreca = 0;
+
+    for(int i = 0; i < p; i++) {
+        while (vreca < v && d[vreca] <= a[i].tezina) {
+            vreca++;
+        }
+        if (vreca <= v) {
+            zbir = zbir + a[i].vrednost;
+            vreca++;
+        }
+    }
+
+    cout << zbir;
+
+    return 0;
+}

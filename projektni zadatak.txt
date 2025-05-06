@@ -38,12 +38,12 @@ int main() {
         
         while (indeks < p && a[indeks].first <= b) {
             pq.push(a[indeks].second);
-            ++indeks;
+            indeks++;
         }
 
         
         if (!pq.empty()) {
-            zbir += pq.top();
+            zbir = zbir + pq.top();
             pq.pop();
         }
     }

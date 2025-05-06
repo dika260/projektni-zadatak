@@ -1,45 +1,54 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
 
 using namespace std;
 
-struct predmet {
-    int tezina, vrednost;
-};
-
 int main() {
-    int p, v;
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+
+    int p;
     cin >> p;
-    vector<predmet> a(p);
-    for(int i = 0; i < p; i++) {
-        cin >> a[i].tezina >> a[i].vrednost;
+
+    vector<pair<int, int>> a(p); 
+    for (int i = 0; i < p; ++i) {
+        cin >> a[i].first >> a[i].second;
     }
 
+    int v;
     cin >> v;
-    vector<int> d(v);
-    for(int i = 0; i < v; i++) {
-        cin >> d[i];
+
+    vector<int> vrece(v);
+    for (int i = 0; i < v; ++i) {
+        cin >> vrece[i];
     }
 
-    sort(a.begin(), a.end(), [](const predmet &a, const predmet &b) {
-        return a.vrednost > b.vrednost;
-    });
-
-    sort(d.begin(), d.end());
+    
+    sort(a.begin(), a.end());
+    
+    sort(vrece.begin(), vrece.end());
 
     int zbir = 0;
-    int vreca = 0;
+    int indeks = 0;
+    
+    priority_queue<int> pq;
 
-    for(int i = 0; i < p; i++) {
-        while (vreca < v && d[vreca] <= a[i].tezina) {
-            vreca++;
+    for (int i = 0; i < v; ++i) {
+        int b = vrece[i];
+
+        
+        while (indeks < p && a[indeks].first <= b) {
+            pq.push(a[indeks].second);
+            ++indeks;
         }
-        if (vreca <= v) {
-            zbir = zbir + a[i].vrednost;
-            vreca++;
+
+        
+        if (!pq.empty()) {
+            zbir += pq.top();
+            pq.pop();
         }
     }
 
-    cout << zbir;
+    cout << zbir << '\n';
 
     return 0;
 }

@@ -16,7 +16,7 @@ plopta = 10
 redkocka, kolkocka = 5, 10
 sirkocka = Sirina // kolkocka
 viskocka = 30
-
+#Stavljamo pozadinu prvo i razvlacimo je da bude iste rezolucije kao igrica
 pozadina = pygame.image.load("pozadina.jpg").convert()
 pozadina = pygame.transform.scale(pozadina, (Sirina, Visina))
 
@@ -40,35 +40,37 @@ while True:
     while pokrece_se:
         sat.tick(fps)
         Slika.blit(pozadina, (0, 0))
-
+        #kontrole
         kontrole = pygame.key.get_pressed()
         if kontrole[pygame.K_LEFT] and platforma.left > 0:
             platforma.x = platforma.x - 7
         if kontrole[pygame.K_RIGHT] and platforma.right < Sirina:
             platforma.x = platforma.x + 7
-
+        #lopta se svakog frame-a pomera
         lopta.x = lopta.x + loptax
         lopta.y = lopta.y + loptay
-
+        #ako lopta udari u granice igre
         if lopta.left <= 0 or lopta.right >= Sirina:
             loptax = loptax * -1
         if lopta.top <= 0:
             loptay = loptay * -1
+        #ako lopta padne, gubi se jedan zivot i ceka se jedna sekunda dok igra ne krene ponovo
         if lopta.bottom >= Visina:
             zivoti = zivoti - 1
             pygame.time.delay(1000)
             lopta.x, lopta.y = Sirina // 2, Visina // 2
             loptax = random.choice([-5.0, 5.0])
             loptay = -5
+        #ako izgubimo sve zivote, igra se zavrsava
         if zivoti < 0:
             kraj = True
             pokrece_se = False
-
+        #ako lopta udari platformu, odbija se i poveca joj se brzina za * 1.05
         if lopta.colliderect(platforma):
                 loptay = loptay * -1
                 loptax = loptax * 1.05
                 loptay = loptay * 1.05
-
+        #ako lopta udari kocku, kocka se brise i lopta se odbija i brzina se povecava za * 1.02
         hindex = lopta.collidelist(kocke)
         if hindex != -1:
             del kocke[hindex]

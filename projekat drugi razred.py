@@ -17,26 +17,26 @@ redkocka, kolkocka = 5, 10
 sirkocka = Sirina // kolkocka
 viskocka = 30
 
-pozadina = pygame.image.load("abeeee.jpg").convert()
+pozadina = pygame.image.load("pozadina.jpg").convert()
 pozadina = pygame.transform.scale(pozadina, (Sirina, Visina))
 
 while True:
-    platforma = pygame.Rect(Sirina//2 - splatforma//2, Visina - 40, splatforma, vplatforma)
-    lopta = pygame.Rect(Sirina//2, Visina//2, plopta*2, plopta*2)
-    loptax, loptay = 5.0, -5.0
-    maksbrzina = 12
+    platforma = pygame.Rect(Sirina//2 - splatforma//2, Visina - 40, splatforma, vplatforma) #dimenzije platforme
+    lopta = pygame.Rect(Sirina//2, Visina//2, plopta*2, plopta*2) #dimenzije lopte
+    loptax, loptay = 5.0, -5.0 #pocetna brzina lopte
+    maksbrzina = 12 #maksimalna brzina lopte
     loptax = max(-maksbrzina, min(loptax, maksbrzina))
     loptay = max(-maksbrzina, min(loptay, maksbrzina))
     zivoti = 3
     kocke = []
     for red in range(redkocka):
         for kol in range(kolkocka):
-            kocka = pygame.Rect(kol * sirkocka + 5, red*viskocka + 5, sirkocka - 10, viskocka - 10)
+            kocka = pygame.Rect(kol * sirkocka + 5, red*viskocka + 5, sirkocka - 10, viskocka - 10) #stavljanje svake kocke u niz
             kocke.append(kocka)
     pokrece_se = True
     kraj = False
     pobeda = False
-    
+    #glavna petlja
     while pokrece_se:
         sat.tick(fps)
         Slika.blit(pozadina, (0, 0))
